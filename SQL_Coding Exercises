@@ -1,0 +1,74 @@
+/* 
+CODING EXERCISES:
+
+ Exercise #1
+Create a table called test. 
+It should contain a single column named test of the DECIMAL type,
+ with a precision of 5 and a scale of 3.
+ 
+ CREATE TABLE test 
+(
+test DECIMAL(5,3)
+);
+
+ Exercise #2
+Create a table named warehouse with two columns: warehouse_id and warehouse_location. 
+The first column should be of type integer, set to auto-increment, and designated as a primary key. 
+The second column should be a variable-length string with a maximum length of 20 characters.
+
+CREATE TABLE warehouse
+(
+warehouse_id INT AUTO_INCREMENT PRIMARY KEY,
+warehouse_location VARCHAR(20) 
+);
+
+Exercise #3
+Create a table named orders with the following four columns and their corresponding data types:
+
+- order_id - integer
+- order_date - date
+- order_info - integer
+- order_value - integer
+- order_currency - variable-length string with a maximum length of 10 characters.
+
+Let order_id be an autoincremented primary key.
+
+CREATE TABLE orders
+(
+order_id INT PRIMARY KEY AUTO_INCREMENT,
+order_date DATE,
+order_info INT,
+order_value INT,
+order_currency VARCHAR(10)
+);
+
+Exercise #4
+Create a table named products with the following four columns and their corresponding data types:
+
+- product_id - integer
+- product_name - variable-length string with a maximum length of 20 characters
+- product_price - integer
+- warehouse_id - integer.
+
+Let product_id be an auto-incremented primary key.
+
+CREATE TABLE products
+(
+product_id INT PRIMARY KEY AUTO_INCREMENT ,
+product_name VARCHAR(20),
+product_price INT,
+warehouse_id INT
+);
+
+Exercise #5
+Assume that a table called products has already been created.
+Use a SELECT statement to verify that it is currently empty.
+ 
+SELECT * from products;
+
+Exercise #6
+Assume that a table called orders has already been created. Use a DDL statement to drop it.
+
+DROP TABLE orders; 
+
+ */
