@@ -1,28 +1,344 @@
+/* SQL */
+
+/*  [1] CREATING A DATABASE : */
+
 CREATE DATABASE IF NOT EXISTS Sales;
+CREATE SCHEMA IF NOT EXISTS Sales; -- Both will work but prefer the above one
 -- here create database is for creating a database. if not exist is for to verify that a database with the same name exists already. and sales is a database name.
 -- We can use CREATE SCHEMA IF NOT EXISTS Sales ; aslo for creating a database named sales.
 USE Sales;
 -- USE Sales; query is to we can select the existing sales database in MySQL.
 
-CREATE TABLE Sales
+/*  [2] CREATING A TABLE : 
+syntax : CREATE TABLE table_name
 (
-purchase_id INT NOT NULL PRIMARY KEY AUTO_INCREMENT,
-date_of_purchase DATE NOT NULL ,
-customer_id INT ,
-item_code VARCHAR(10) NOT NULL
+column_1 data_type constraints,
+column_2 data_type constraints,
+column_3 data_type constraints
+); 
+*/
+
+CREATE TABLE Sales (
+    purchase_id INT NOT NULL PRIMARY KEY AUTO_INCREMENT,
+    date_of_purchase DATE NOT NULL,
+    customer_id INT,
+    item_code VARCHAR(10) NOT NULL
 );
 
-CREATE TABLE Customer
-(
-customer_id INT ,
-first_name VARCHAR(255),
-last_name VARCHAR(255),
-email_address VARCHAR(255),
-Number_of_Complains INT  
+/* Create the “customers” table in the “sales” database. Let it contain the following 5 columns: customer_id, first_name, last_name, email_address, and number_of_complaints.
+ Let the data types of customer_id and number_of_complaints be integer, while the data types of all other columns be VARCHAR of 255.*/
+ 
+CREATE TABLE Customer (
+    customer_id INT,
+    first_name VARCHAR(255),
+    last_name VARCHAR(255),
+    email_address VARCHAR(255),
+    Number_of_Complains INT
 );
+
+/* [3] USING DATABASES AND TABLES*/
+
+USE Sales;
+
+SELECT * FROM sales;  -- SELECT A DEFAULT DATABASE
  
- SELECT * FROM sales;
- 
- SELECT * FROM sales.sales;
+SELECT * FROM sales.sales; -- CALL A TABLE FROM A CERTAIN DATABASE(HERE SALES)
  
  DROP TABLE sales;
+ 
+ /* [4]  PRIMARY KEY CONSTRAINTS */
+ 
+ CREATE TABLE Sales (
+    purchase_number INT AUTO_INCREMENT PRIMARY KEY,
+    date_of_purchase DATE NOT NULL,
+    customer_id INT,
+    item_code VARCHAR(10) NOT NULL,
+    PRIMARY KEY (purchase_number)
+);
+ 
+ -- WE can do the same job by below : 
+ 
+CREATE TABLE Sales (
+    purchase_number INT AUTO_INCREMENT,
+    date_of_purchase DATE NOT NULL,
+    customer_id INT,
+    item_code VARCHAR(10) NOT NULL,
+    PRIMARY KEY (purchase_number)
+);
+ 
+ /*
+ Drop the “customers” table and re-create it using the following code:
+
+CREATE TABLE customers                                                              
+
+(  
+
+    customer_id INT,  
+
+    first_name varchar(255),  
+
+    last_name varchar(255),  
+
+    email_address varchar(255),  
+
+    number_of_complaints int,  
+
+primary key (customer_id)  
+
+);  
+
+   
+
+Then, create the “items” table  
+
+(columns - data types:  
+
+item_code – VARCHAR of 255,  
+
+item – VARCHAR of 255,  
+
+unit_price – NUMERIC of 10 and 2,  
+
+company­_id – VARCHAR of 255),  
+
+and the “companies” table  
+
+(company_id – VARCHAR of 255,  
+
+company_name – VARCHAR of 255,  
+
+headquarters_phone_number – integer of 12). 
+ */
+ 
+ DROP TABLE customer;
+ 
+CREATE TABLE customer (
+    customer_id INT,
+    first_name VARCHAR(255),
+    last_name VARCHAR(255),
+    email_address VARCHAR(255),
+    number_of_complaints INT,
+    PRIMARY KEY (customer_id)
+);
+ 
+CREATE TABLE item (
+    item_code VARCHAR(255),
+    item VARCHAR(255),
+    unit_price NUMERIC(10 , 2 ),
+    company_id VARCHAR(255),
+    PRIMARY KEY (item_code)
+);
+ 
+CREATE TABLE companies (
+    company_id VARCHAR(255),
+    company_name VARCHAR(255),
+    headquaters_phone_number INT(12),
+    PRIMARY KEY (company_id)
+);
+
+/* [5] FOREIGN KEY CONSTRAINT */
+
+CREATE TABLE Sales (
+    purchase_number INT AUTO_INCREMENT,
+    date_of_purchase DATE NOT NULL,
+    customer_id INT,
+    item_code VARCHAR(10) NOT NULL,
+    PRIMARY KEY (purchase_number),
+    foreign key(customer_id) references customers (customer_id) ON DELETE CASCADE
+);
+-- ON DELETE CASCADE : IF the specific value from the parent table's primary key has been deleted all the records from the child table referring to the value 
+ -- will be removed as well . Here order is important if it's deleted from parent table only then it will be removed from child table not visaversa.
+
+-- 2nd METHOD AND MOSTLY USED : THROUGH ALTER TABLE STATEMENT 
+ 
+ -- syntax = ALTER TABLE table_name  
+ --          ADD ....... ;
+ 
+ CREATE TABLE Sales (
+    purchase_number INT AUTO_INCREMENT,
+    date_of_purchase DATE NOT NULL,
+    customer_id INT,
+    item_code VARCHAR(10) NOT NULL,
+    PRIMARY KEY (purchase_number)
+);
+
+ALTER TABLE sales
+ADD foreign key(customer_id) references customers (customer_id) ON DELETE CASCADE;
+ 
+ ALTER TABLE Sales
+ DROP foreign key foreign_key_name;   -- to drop the foreign key constraint
+ 
+ /* 
+ Looking to the next few lectures of the course, drop all tables from the “Sales” database in the following order: first drop “sales”, then “customers”, “items”, and finally “companies”.
+ */
+ 
+ DROP TABLE sales;
+ DROP TABLE companies;
+ DROP TABLE item ;
+ DROP TABLE customers;
+ 
+ /* [6] UNIQUE KEY CONSTRAINT : */
+ 
+CREATE TABLE customers (
+    customer_id INT AUTO_INCREMENT,
+    first_name VARCHAR(255),
+    last_name VARCHAR(255),
+    email_address VARCHAR(255),
+    number_of_complaints INT,
+    PRIMARY KEY (customer_id),
+    UNIQUE KEY (email_address)
+);
+ 
+ -- 2nd METHOD AND MOSTLY USED : THROUGH ALTER TABLE STATEMENT 
+ 
+ CREATE TABLE customers (
+    customer_id INT AUTO_INCREMENT,
+    first_name VARCHAR(255),
+    last_name VARCHAR(255),
+    email_address VARCHAR(255),
+    number_of_complaints INT,
+    PRIMARY KEY (customer_id)
+);
+ 
+ ALTER TABLE customers
+ ADD unique key (email_address);
+ 
+ ALTER TABLE customers
+ DROP INDEX email_address;
+ 
+ /* 
+ Drop the “customers” table, and then recreate it using the following code.
+ Then run the following code that will add a “gender” column in the “customers” table, and will then insert a new record in it. 
+ Don’t worry if you don’t understand the meaning of the code perfectly – we will discuss these structures later on in the course in more detail.
+ We will just use them now to insert a row in our “customers” table.
+ */
+ 
+ CREATE TABLE customers (
+    customer_id INT AUTO_INCREMENT,
+    first_name VARCHAR(255),
+    last_name VARCHAR(255),
+    email_address VARCHAR(255),
+    number_of_complaints INT,
+PRIMARY KEY (customer_id)
+);
+ 
+ ALTER TABLE customers
+ ADD COLUMN gender ENUM('M','F') AFTER last_name;
+ 
+INSERT INTO customers (first_name, last_name, gender, email_address, number_of_complaints)
+
+VALUES ('John', 'Mackinley', 'M', 'john.mckinley@365careers.com', 0)
+
+;
+ 
+ /* [7] DEFAULT Constraint : */
+ 
+ CREATE TABLE customers (
+    customer_id INT AUTO_INCREMENT,
+    first_name VARCHAR(255),
+    last_name VARCHAR(255),
+    email_address VARCHAR(255),
+    number_of_complaints INT default 0,
+PRIMARY KEY (customer_id)
+);
+ 
+ -- 2nd Method using the Alter statement THIS IS MOST USED : 
+ 
+ CREATE TABLE customers (
+    customer_id INT AUTO_INCREMENT,
+    first_name VARCHAR(255),
+    last_name VARCHAR(255),
+    email_address VARCHAR(255),
+    number_of_complaints INT,
+PRIMARY KEY (customer_id)
+);
+
+ALTER TABLE customers
+CHANGE COLUMN number_of_complaints number_of_complaints INT default 0 ;
+
+insert INTO customers (first_name , last_name , gender )
+values('GANDHI','PARSHWA','M');
+
+SELECT * FROM customers;
+
+ALTER TABLE customers
+ALTER COLUMN number_of_complaints DROP default  ;  -- for removing the defalut using ALTER STATEMENT 
+ 
+ /* 
+ Recreate the “companies” table
+
+(company_id – VARCHAR of 255,  
+
+company_name – VARCHAR of 255,  
+
+headquarters_phone_number – VARCHAR of 255),    
+
+This time setting the “headquarters phone number” to be the unique key, and default value of the company's name to be “X”.   
+
+After you execute the code properly, drop the “companies” table.
+ */
+ 
+CREATE TABLE companies (
+    company_id VARCHAR(255),
+    company_name VARCHAR(255),
+    headquaters_phone_number VARCHAR(255),
+    PRIMARY KEY(company_id)
+);
+ 
+ ALTER TABLE companies
+ ADD unique key (headquaters_phone_number);
+ 
+ ALTER TABLE companies
+ CHANGE column company_name company_name VARCHAR(255) default 'X';
+ 
+DROP TABLE companies;
+
+/* [8]  NOT NULL CONSTRAINT */
+
+CREATE TABLE companies (
+    company_id VARCHAR(255),
+    company_name VARCHAR(255) NOT NULL ,
+    headquaters_phone_number VARCHAR(255),
+    PRIMARY KEY(company_id)
+);
+ 
+ -- [2] ANOTHER METHOD FOR NULL CONSTRAINT USING ALTER STATEMENT AND IT'S USED MORE.
+ 
+ CREATE TABLE companies (
+    company_id INT auto_increment,
+    company_name VARCHAR(255),
+    headquaters_phone_number VARCHAR(255),
+    PRIMARY KEY(company_id)
+);
+
+ALTER TABLE companies
+MODIFY company_name VARCHAR(255) NULL;
+
+ALTER TABLE companies
+CHANGE company_name company_name VARCHAR(255) NOT NULL;
+
+INSERT INTO companies (headquaters_phone_number , company_name)
+values (' (202) 555-0196','company A');
+
+select * from companies;
+
+
+/* 
+Using ALTER TABLE, first add the NULL constraint to the headquarters_phone_number field in the “companies” table, and then drop that same constraint.
+*/
+ 
+ CREATE TABLE companies (
+    company_id INT auto_increment,
+    company_name VARCHAR(255),
+    headquaters_phone_number VARCHAR(255),
+    PRIMARY KEY(company_id)
+);
+ 
+ALTER TABLE companies
+MODIFY headquaters_phone_number VARCHAR(255) NULL;
+
+ALTER TABLE companies
+CHANGE headquaters_phone_number headquaters_phone_number VARCHAR(255) NOT NULL;
+
+
+
