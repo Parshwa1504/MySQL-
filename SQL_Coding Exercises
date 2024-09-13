@@ -71,4 +71,180 @@ Assume that a table called orders has already been created. Use a DDL statement 
 
 DROP TABLE orders; 
 
+Exercise #7
+Create a table named order_info with the following four columns and their corresponding data types:
+
+- order_info_id - integer
+- order_id - integer
+- product_id - integer
+- product_quantity - integer
+
+Write the relevant code on the same line as the column name to indicate order_info_id is an auto-incremented primary key. 
  */
+
+CREATE TABLE order_info 
+(
+order_info_id INT AUTO_INCREMENT,
+order_id INT,
+product_id INT,
+product_quantity INT,
+PRIMARY KEY(order_info_id)
+);
+
+Exercise #8
+Create a table named order_info with the following four columns and their corresponding data types:
+
+- order_info_id - integer
+- order_id - integer
+- product_id - integer
+- product_quantity - integer
+
+Indicate that order_info_id is an auto-incremented primary key after specifying the four table fields.
+
+CREATE TABLE order_info
+(
+order_info_id INT AUTO_INCREMENT,
+order_id INT,
+product_id INT,
+product_quantity INT,
+PRIMARY KEY(order_info_id)
+
+);
+
+
+Exercise #9
+
+Assume a table products, containing the fields product_id, product_name, product_price , and warehouse_id, has already been created.
+
+Now, create a table named order_info with the following four columns and their corresponding data types:
+
+- order_info_id - integer
+- order_id - integer
+- product_id - integer
+- product_quantity - integer
+
+Indicate that order_info_id is an auto-incremented primary key. Also, set a FOREIGN KEY constraint referencing the product_id column from the products table.
+
+CREATE TABLE order_info
+(
+order_info_id INT AUTO_INCREMENT,
+order_id INT,
+product_id INT,
+product_quantity INT,
+PRIMARY KEY(order_info_id),
+FOREIGN KEY(product_id) references products(product_id) 
+
+);
+
+
+Exercise #10
+
+Assume the tables products, containing the fields product_id, product_name, product_price , and warehouse_id, and order_info, containing the fields order_info_id, order_id, product_id, and product_quantity, have already been created.
+
+Now, create a table named orders with the following four columns and their corresponding data types:
+
+- order_id - integer
+- order_date - date
+- order_info_id - integer
+- order_value - integer
+- order_currency - variable-length string with a maximum length of 10 characters
+
+Indicate that order_id is an auto-incremented primary key. Also, set a FOREIGN KEY constraint referencing the order_info_id column from the order_info table.
+
+CREATE TABLE orders
+(
+order_id INT AUTO_INCREMENT,
+order_date DATE,
+order_info_id INT,
+order_value INT,
+order_currency VARCHAR(10),
+PRIMARY KEY(order_id),
+FOREIGN KEY (order_info_id) references order_info(order_info_id)
+);
+
+
+Exercise #11
+
+Assume the following tables have already been created:
+
+- products
+- order_info
+- orders
+
+Drop the orders table.
+
+DROP TABLE orders;
+
+
+Exercise #12
+
+Assume a table warehouses, containing the fields warehouse_id and warehouse_name, has already been created. Now, create a table named products with the following four columns and their corresponding data types:
+
+- product_id - integer
+- product_name - variable-length string with a maximum length of 20 characters
+- product_price - integer
+- warehouse_id - integer
+
+where product_id is an auto-incremented primary key. Then, set a FOREIGN KEY constraint referencing the warehouse_id column from the warehouses table. Finally, set a UNIQUE KEY constraint on the product_name field.
+
+CREATE TABLE products
+(
+product_id INT AUTO_INCREMENT,
+product_name VARCHAR(20),
+product_price INT,
+warehouse_id INT,
+PRIMARY KEY(product_id),
+foreign KEY (warehouse_id) references warehouses(warehouse_id),
+UNIQUE KEY(product_name)
+
+);
+
+
+Exercise #13
+
+Assume a table warehouses, containing the fields warehouse_id and warehouse_name, has already been created. Now, create a table named products with the following four columns and their corresponding data types:
+
+- product_id - integer
+- product_name - variable-length string with a maximum length of 20 characters
+- product_price - integer
+- warehouse_id - integer
+
+In addition, ensure the following four constraints are specified for the products table:
+
+- product_id - an auto-incremented primary key
+- a foreign key constraint referencing the warehouse_id column from the warehouses table
+- a unique key constraint on the product name field
+- a default clause on the product_name field to explicitly indicate 'no-name' as the default value for that column.
+
+CREATE TABLE products
+(
+product_id INT AUTO_INCREMENT,
+product_name VARCHAR(20) default 'no-name',
+product_price INT,
+warehouse_id INT,
+PRIMARY KEY (product_id),
+foreign KEY(warehouse_id) references warehouses (warehouse_id),
+UNIQUE KEY (product_name)
+);
+
+
+Exercise #14
+
+Create a table named products with the following four columns and their corresponding data types:
+
+- product_id - integer
+- product_name - variable-length string with a maximum length of 20 characters
+- product_price - integer
+- warehouse_id - integer
+
+Let product_id be an auto-incremented primary key. Ensure no null values can be contained in any of the columns.
+
+CREATE TABLE products
+(
+product_id INT AUTO_INCREMENT,
+product_name VARCHAR(20)  NOT NULL,
+product_price INT NOT NULL ,
+warehouse_id INT NOT NULL,
+PRIMARY KEY (product_id)
+);
+
