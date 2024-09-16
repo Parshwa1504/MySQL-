@@ -1,0 +1,47 @@
+/* SQL */
+
+/*  [1] CREATING A DATABASE : */
+
+CREATE DATABASE IF NOT EXISTS Sales;
+CREATE SCHEMA IF NOT EXISTS Sales; -- Both will work but prefer the above one
+-- here create database is for creating a database. if not exist is for to verify that a database with the same name exists already. and sales is a database name.
+-- We can use CREATE SCHEMA IF NOT EXISTS Sales ; aslo for creating a database named sales.
+USE Sales;
+-- USE Sales; query is to we can select the existing sales database in MySQL.
+
+/*  [2] CREATING A TABLE : 
+syntax : CREATE TABLE table_name
+(
+column_1 data_type constraints,
+column_2 data_type constraints,
+column_3 data_type constraints
+); 
+*/
+
+CREATE TABLE Sales (
+    purchase_id INT NOT NULL PRIMARY KEY AUTO_INCREMENT,
+    date_of_purchase DATE NOT NULL,
+    customer_id INT,
+    item_code VARCHAR(10) NOT NULL
+);
+
+/* Create the “customers” table in the “sales” database. Let it contain the following 5 columns: customer_id, first_name, last_name, email_address, and number_of_complaints.
+ Let the data types of customer_id and number_of_complaints be integer, while the data types of all other columns be VARCHAR of 255.*/
+ 
+CREATE TABLE Customer (
+    customer_id INT,
+    first_name VARCHAR(255),
+    last_name VARCHAR(255),
+    email_address VARCHAR(255),
+    Number_of_Complains INT
+);
+
+/* [3] USING DATABASES AND TABLES*/
+
+USE Sales;
+
+SELECT * FROM sales;  -- SELECT A DEFAULT DATABASE
+ 
+SELECT * FROM sales.sales; -- CALL A TABLE FROM A CERTAIN DATABASE(HERE SALES)
+ 
+ DROP TABLE sales;
