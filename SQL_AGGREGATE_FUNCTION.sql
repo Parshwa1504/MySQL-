@@ -107,3 +107,9 @@ Select the department number and name from the ‘departments_dup’ table and
 
 -- [7] MOD() : 
 -- To check that or print even output we can modlulus it with 2 and if anser is zero it will be even in sql for modulus there is a function MOD()
+
+/* 
+Query a list of CITY names from STATION for cities that have an even ID number. Print the results in any order, but exclude duplicates from the answer.
+*/
+
+SELECT DISTINCT CITY FROM STATION WHERE MOD(ID,2) = 0;
