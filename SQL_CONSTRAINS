@@ -119,6 +119,9 @@ ADD foreign key(customer_id) references customers (customer_id) ON DELETE CASCAD
  
  ALTER TABLE Sales
  DROP foreign key foreign_key_name;   -- to drop the foreign key constraint
+
+ALTER TABLE Sales
+DROP foreign key customer_id ;
  
  /* 
  Looking to the next few lectures of the course, drop all tables from the “Sales” database in the following order: first drop “sales”, then “customers”, “items”, and finally “companies”.
