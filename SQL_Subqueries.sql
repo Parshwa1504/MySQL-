@@ -194,3 +194,38 @@ FROM
    
       SELECT * FROM emp_manager;
    
+   /* 
+   SELF JOIN : It's applied when a table mist join it self.if we wnat to combine certain row of a table with other row of the same tablr yoou need a self join.
+   */
+   
+   -- task : from employee_manager table extract the data of employees who are manager as well
+   
+   use employees;
+   SELECT * FROM emp_manager;
+    
+   SELECT DISTINCT e1.* FROM emp_manager e1 JOIN emp_manager e2 ON e1.emp_no = e2.manager_no;  -- METHOD 1 WHERE WE FILTER BOTH E1 AND E2 IN JOIN.
+   
+   SELECT e1.* FROM emp_manager e1 join  emp_manager e2 on e1.emp_no = e2.manager_no WHERE e2.emp_no in ( select manager_no FROM emp_manager ) ;  
+   -- METHOD 2 WHERE WE FILTER E1 OR E2 IN JOIN AND ANOTHER OEN IN WHERE CLAUSE.
+
+/* 
+SQL VIEWS : A VIRTUAL TABLE WHOSE CONTENTS ARE OBTAINED FROM AN EXISTING TABLE OR TABLES CALLED BASE TABLES.THE VIEW ITSELF DOES NOT CONTAIN ANY REAL DATA THE DATA IS PHYSICALLY STORED IN THE BASE TABLE.
+*/   
+ 
+select * from dept_emp; 
+ 
+CREATE OR REPLACE VIEW V_dept_emp_latest AS
+SELECT  emp_no , dept_no , MAX(from_date) as From_date , MAX(to_date) as To_date 
+FROM dept_emp 
+GROUP BY emp_no;
+
+/* 
+Create a view that will extract the average salary of all managers registered in the database. Round this value to the nearest cent.
+If you have worked correctly, after executing the view from the “Schemas” section in Workbench, you should obtain the value of 66924.27.
+*/
+
+
+CREATE OR REPLACE VIEW V_average_salary as
+SELECT  t.title , ROUND(AVG(s.salary) , 2) FROM salaries s 
+JOIN titles t ON s.emp_no = t.emp_no 
+WHERE t.title = 'manager';
