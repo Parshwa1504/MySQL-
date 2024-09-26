@@ -124,6 +124,10 @@ WHERE
 SELECT DISTINCT CITY FROM STATION WHERE CITY LIKE 'A%' OR CITY LIKE 'E%' OR CITY LIKE 'I%' OR CITY LIKE 'O%' OR  CITY LIKE 'U%'; 
 
 -- HERE WE HAVE USED WHERE CITY LIKE 'A%' - IT WILL GIVE CITY NAMES WHICH STARTS FROM A . IF WE DO '%A' THEN THIS WILL GIVE US THE NAME WHICH ENDS WITH  A.
+
+-- Query the list of CITY names from STATION which have vowels (i.e., a, e, i, o, and u) as both their first and last characters. Your result cannot contain duplicates.
+
+SELECT DISTINCT CITY FROM STATION WHERE (CITY LIKE 'a%' OR CITY LIKE 'e%' OR CITY LIKE 'i%' OR CITY LIKE 'o%' OR CITY LIKE 'u%') AND (CITY LIKE '%a' OR CITY LIKE '%e' OR CITY LIKE '%i' OR CITY LIKE '%o' OR CITY LIKE '%u') ;
         
         
 /* 
