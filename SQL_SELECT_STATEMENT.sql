@@ -119,6 +119,13 @@ WHERE
         AND (first_name = 'Kellie'
         OR first_name = 'Aruna');
         
+-- Query the list of CITY names starting with vowels (i.e., a, e, i, o, or u) from STATION. Your result cannot contain duplicates.
+
+SELECT DISTINCT CITY FROM STATION WHERE CITY LIKE 'A%' OR CITY LIKE 'E%' OR CITY LIKE 'I%' OR CITY LIKE 'O%' OR  CITY LIKE 'U%'; 
+
+-- HERE WE HAVE USED WHERE CITY LIKE 'A%' - IT WILL GIVE CITY NAMES WHICH STARTS FROM A . IF WE DO '%A' THEN THIS WILL GIVE US THE NAME WHICH ENDS WITH  A.
+        
+        
 /* 
 [5]  IN , NOT IN  operator :  Allows SQL to return the names written in parentheses if they exist in our table.
 */ 
